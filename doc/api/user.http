@@ -1,0 +1,63 @@
+
+### 用户登录
+POST http://localhost:9000/user/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123"
+}
+
+
+### 退出登录
+POST http://localhost:9000/user/logout
+Content-Type: application/json
+token: G8_ZCJPXXaZ29baf0_CLB0RlkQ9DTYp0yR__
+
+
+### 获取当前登录用户的信息
+GET http://localhost:9000/user/getCurrentUserInfo
+Accept: application/json
+token: s7_STYrABQRwAdsAL_5EXZx45EwU7D0Bi8__
+
+
+### 新增用户
+POST http://localhost:9000/user/addUser
+Content-Type: application/json
+token: yh_BZBXkIUkrdK20Q_K6OXUIK4an0aekxU__
+
+{
+  "username": "20240118_test",
+  "password": "123",
+  "nickname": "20240118_test_nickname",
+  "remark": "备注",
+  "faceUrl": "www.baidu.com"
+}
+
+### 删除用户
+POST http://localhost:9000/user/removeUser?id=1747963438065545217
+Content-Type: application/json
+token: XS_k6GXWEbn67gNYq_NMpIU2Z3k8yblM5Z__
+
+### 更新用户信息
+POST http://localhost:9000/user/updateUser
+Content-Type: application/json
+token: o6_9k7eoybeAmzxS2_a5TtUJclSKXFCvM5__
+
+{
+  "id": "1747982592428503041",
+  "nickname": "updatenickname",
+  "remark": "更新备注",
+  "faceUrl": "www.baidu.com"
+}
+
+### 分页查询用户
+POST http://localhost:9000/user/pageQueryUser
+Content-Type: application/json
+token: o6_9k7eoybeAmzxS2_a5TtUJclSKXFCvM5__
+
+{
+  "username": "",
+  "current": 1,
+  "size": 2
+}

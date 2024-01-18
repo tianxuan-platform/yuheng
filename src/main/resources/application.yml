@@ -1,0 +1,118 @@
+server:
+  port: 9000
+  tomcat:
+    uri-encoding: UTF-8
+    max-swallow-size: -1
+
+spring:
+  application:
+    name: yuheng
+  main:
+    allow-circular-references: true  #允许循环引用
+    allow-bean-definition-overriding: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql.local.wuyiccc.com:12011/yuheng?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: 123
+    hikari:
+      connection-timeout: 30000               # 等待连接池分配连接的最大时间（毫秒），超过这个时长还没有可用的连接，则会抛出SQLException
+      minimum-idle: 5                         # 最小连接数
+      maximum-pool-size: 20                   # 最大连接数
+      auto-commit: true                       # 自动提交
+      idle-timeout: 600000                    # 连接超时的最大时长（毫秒），超时则会被释放（retired）
+      pool-name: DataSourceHikariCP           # 连接池的名字
+      max-lifetime: 18000000                  # 连接池的最大生命时长（毫秒），超时则会被释放（retired）
+      connection-test-query: SELECT 1
+  redis:
+    host: redis.local.wuyiccc.com
+    port: 12021
+    password: 123
+    database: 1
+    ssl: false
+
+
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+  global-config:
+    db-config:
+      # 雪花算法id
+      id-type: assign_id
+      logic-delete-field: delFlag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+    # 去掉mybatis-plus banner图片
+    banner: false
+  # sql日志打印
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+# 配置日志级别
+logging:
+  level:
+    root: info
+  config: classpath:logback.xml
+
+
+
+
+
+####################
+# 鉴权配置
+####################
+sa-token:
+  token-name: token
+  # token有效期，单位s 默认1天, -1代表永不过期
+  timeout: 86400
+  # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+  active-timeout: -1
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: false
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-share: false
+  # token风格
+  token-style: tik
+  # 是否输出操作日志
+  is-log: true
+  isReadCookie: false
+  isReadBody: false
+
+# 安全放行路径
+yuheng:
+  security:
+    # 忽略路径
+    ignore:
+      urls:
+        - /user/login
+  # redisson 配置
+  redisson:
+    # redis key前缀
+    keyPrefix:
+    # 线程池数量
+    threads: 4
+    # Netty线程池数量
+    nettyThreads: 8
+    # 单节点配置
+    singleServerConfig:
+      # 客户端名称
+      clientName: ${spring.application.name}
+      # 最小空闲连接数
+      connectionMinimumIdleSize: 8
+      # 连接池大小
+      connectionPoolSize: 32
+      # 连接空闲超时，单位：毫秒
+      idleConnectionTimeout: 10000
+      # 命令等待超时，单位：毫秒
+      timeout: 3000
+      # 发布和订阅连接池大小
+      subscriptionConnectionPoolSize: 50
+####################
