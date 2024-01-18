@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userEntityList.get(0);
         String slat = userEntity.getSlat();
         String enPassword = Md5Utils.encrypt(userLoginDTO.getPassword(), slat);
-        if (Objects.equals(userEntity.getPassword(), enPassword)) {
+        if (!Objects.equals(userEntity.getPassword(), enPassword)) {
             throw new CustomException(YuhengBizCode.USER_NAME_OR_PASSWORD_ERROR);
         }
         StpUtil.login(userEntity.getId());
@@ -60,6 +60,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void addUser(UserCreateDTO userCreateDTO) {
+
+        SecurityUtils.checkPermission();
 
         UserEntity userEntity = UserConvert.INSTANCE.convertToUserEntity(userCreateDTO);
         // 1. 生成slat
@@ -88,6 +90,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeUser(String id) {
 
+        SecurityUtils.checkPermission();
+
         int res = userMapper.deleteById(id);
         if (res == 0) {
             throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
@@ -96,7 +100,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVO findUserById(String id) {
-
 
         UserEntity userEntity = userMapper.selectById(id);
         if (Objects.isNull(userEntity)) {
@@ -109,6 +112,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateUser(UserUpdateDTO userUpdateDTO) {
+
+        SecurityUtils.checkPermission();
 
         UserEntity userEntity = UserConvert.INSTANCE.convertToUserEntity(userUpdateDTO);
         int res = userMapper.updateById(userEntity);
@@ -145,6 +150,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateUserPassword(UserPasswordUpdateDTO userPasswordUpdateDTO) {
+
+        SecurityUtils.checkPermission();
 
         doUpdateUserPassword(userPasswordUpdateDTO);
     }

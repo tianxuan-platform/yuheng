@@ -1,7 +1,9 @@
 package com.wuyiccc.yuheng.infrastructure.utils;
 
+import com.wuyiccc.yuheng.infrastructure.code.YuhengBizCode;
 import com.wuyiccc.yuheng.infrastructure.constants.DbConstants;
 import com.wuyiccc.yuheng.infrastructure.context.SecurityContext;
+import com.wuyiccc.yuheng.infrastructure.exception.CustomException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -30,9 +32,13 @@ public class SecurityUtils {
 
     public static boolean isAdmin() {
         String userName = SecurityContext.getUserName();
-        if (Objects.equals(userName, DbConstants.ADMIN_USERNAME)) {
-            return true;
+        return Objects.equals(userName, DbConstants.ADMIN_USERNAME);
+    }
+
+
+    public static void checkPermission() {
+        if (!isAdmin()) {
+            throw new CustomException(YuhengBizCode.NO_PERMISSION);
         }
-        return false;
     }
 }

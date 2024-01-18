@@ -20,6 +20,8 @@ public enum YuhengBizCode implements IBizCode {
     USER_NOT_FOUND("1_2", "用户不存在"),
 
     USER_NAME_OR_PASSWORD_ERROR("1_3", "用户名或密码错误"),
+
+    NO_PERMISSION("1_4", "用户无操作权限");
     ;
 
     /**

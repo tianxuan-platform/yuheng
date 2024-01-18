@@ -4,7 +4,7 @@ POST http://localhost:9000/user/login
 Content-Type: application/json
 
 {
-  "username": "admin",
+  "username": "20240118_test",
   "password": "123"
 }
 
@@ -24,7 +24,7 @@ token: s7_STYrABQRwAdsAL_5EXZx45EwU7D0Bi8__
 ### 新增用户
 POST http://localhost:9000/user/addUser
 Content-Type: application/json
-token: yh_BZBXkIUkrdK20Q_K6OXUIK4an0aekxU__
+token: J3_UbyuWiBiTFigwz_UTH3QfQJtGNK55eX__
 
 {
   "username": "20240118_test",
