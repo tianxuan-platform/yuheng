@@ -1,4 +1,4 @@
-package com.wuyiccc.yuheng.pojo.dto;
+package com.wuyiccc.yuheng.pojo.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLoginDTO {
+public class UserLoginBO {
 
     /**
      * 登录用户名

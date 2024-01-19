@@ -3,7 +3,7 @@ package com.wuyiccc.yuheng.controller;
 import cn.dev33.satoken.stp.StpUtil;
 import com.wuyiccc.yuheng.infrastructure.pojo.PageVO;
 import com.wuyiccc.yuheng.infrastructure.pojo.R;
-import com.wuyiccc.yuheng.pojo.dto.*;
+import com.wuyiccc.yuheng.pojo.bo.*;
 import com.wuyiccc.yuheng.pojo.vo.UserVO;
 import com.wuyiccc.yuheng.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +32,9 @@ public class UserController {
      * 用户登录接口
      */
     @PostMapping("/login")
-    public R<String> login(@Valid @RequestBody UserLoginDTO userLoginDTO) {
+    public R<String> login(@Valid @RequestBody UserLoginBO userLoginBO) {
 
-        String token = userService.login(userLoginDTO);
+        String token = userService.login(userLoginBO);
         return R.data(token);
     }
 
@@ -62,9 +62,9 @@ public class UserController {
 
 
     @PostMapping("/addUser")
-    public R<String> addUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
+    public R<String> addUser(@Valid @RequestBody UserCreateBO userCreateBO) {
 
-        userService.addUser(userCreateDTO);
+        userService.addUser(userCreateBO);
         return R.ok();
     }
 
@@ -85,30 +85,30 @@ public class UserController {
 
 
     @PostMapping("/updateUser")
-    public R<String> updateUser(@Valid @RequestBody UserUpdateDTO userUpdateDTO) {
+    public R<String> updateUser(@Valid @RequestBody UserUpdateBO userUpdateBO) {
 
-        userService.updateUser(userUpdateDTO);
+        userService.updateUser(userUpdateBO);
         return R.ok();
     }
 
     @PostMapping("/pageQueryUser")
-    public R<PageVO<UserVO>> pageQueryUser(@Valid @RequestBody UserPageQueryDTO userPageQueryDTO) {
+    public R<PageVO<UserVO>> pageQueryUser(@Valid @RequestBody UserPageQueryBO userPageQueryBO) {
 
-        PageVO<UserVO> pageResult = userService.pageQueryUser(userPageQueryDTO);
+        PageVO<UserVO> pageResult = userService.pageQueryUser(userPageQueryBO);
         return R.ok(pageResult);
     }
 
     @PostMapping("/updateMyPassword")
-    public R<String> updateMyPassword(@Valid @RequestBody MyUserPasswordUpdateDTO myUserPasswordUpdateDTO) {
+    public R<String> updateMyPassword(@Valid @RequestBody MyUserPasswordUpdateBO myUserPasswordUpdateBO) {
 
-        userService.updateMyUserPassword(myUserPasswordUpdateDTO);
+        userService.updateMyUserPassword(myUserPasswordUpdateBO);
         return R.ok();
     }
 
     @PostMapping("/updateUserPassword")
-    public R<String> updateUserPassword(@Valid @RequestBody UserPasswordUpdateDTO userPasswordUpdateDTO) {
+    public R<String> updateUserPassword(@Valid @RequestBody UserPasswordUpdateBO userPasswordUpdateBO) {
 
-        userService.updateUserPassword(userPasswordUpdateDTO);
+        userService.updateUserPassword(userPasswordUpdateBO);
         return R.ok();
     }
 

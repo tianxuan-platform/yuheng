@@ -10,7 +10,7 @@ import com.wuyiccc.yuheng.infrastructure.pojo.PageVO;
 import com.wuyiccc.yuheng.infrastructure.utils.Md5Utils;
 import com.wuyiccc.yuheng.infrastructure.utils.SecurityUtils;
 import com.wuyiccc.yuheng.mapper.UserMapper;
-import com.wuyiccc.yuheng.pojo.dto.*;
+import com.wuyiccc.yuheng.pojo.bo.*;
 import com.wuyiccc.yuheng.pojo.entity.UserEntity;
 import com.wuyiccc.yuheng.pojo.vo.UserVO;
 import com.wuyiccc.yuheng.service.UserService;
@@ -36,10 +36,10 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public String login(UserLoginDTO userLoginDTO) {
+    public String login(UserLoginBO userLoginBO) {
 
         LambdaQueryWrapper<UserEntity> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(UserEntity::getUsername, userLoginDTO.getUsername());
+        wrapper.eq(UserEntity::getUsername, userLoginBO.getUsername());
 
         List<UserEntity> userEntityList = userMapper.selectList(wrapper);
 
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         }
         UserEntity userEntity = userEntityList.get(0);
         String slat = userEntity.getSlat();
-        String enPassword = Md5Utils.encrypt(userLoginDTO.getPassword(), slat);
+        String enPassword = Md5Utils.encrypt(userLoginBO.getPassword(), slat);
         if (!Objects.equals(userEntity.getPassword(), enPassword)) {
             throw new CustomException(YuhengBizCode.USER_NAME_OR_PASSWORD_ERROR);
         }
@@ -59,16 +59,16 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void addUser(UserCreateDTO userCreateDTO) {
+    public void addUser(UserCreateBO userCreateBO) {
 
         SecurityUtils.checkPermission();
 
-        UserEntity userEntity = UserConvert.INSTANCE.convertToUserEntity(userCreateDTO);
+        UserEntity userEntity = UserConvert.INSTANCE.convertToUserEntity(userCreateBO);
         // 1. 生成slat
         String slat = Md5Utils.generateSlat();
         userEntity.setSlat(slat);
         // 2. password加密
-        String enPassword = Md5Utils.encrypt(userCreateDTO.getPassword(), slat);
+        String enPassword = Md5Utils.encrypt(userCreateBO.getPassword(), slat);
         userEntity.setPassword(enPassword);
 
         userMapper.insert(userEntity);
@@ -111,11 +111,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateUser(UserUpdateDTO userUpdateDTO) {
+    public void updateUser(UserUpdateBO userUpdateBO) {
 
         SecurityUtils.checkPermission();
 
-        UserEntity userEntity = UserConvert.INSTANCE.convertToUserEntity(userUpdateDTO);
+        UserEntity userEntity = UserConvert.INSTANCE.convertToUserEntity(userUpdateBO);
         int res = userMapper.updateById(userEntity);
         if (res != 1) {
             throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
@@ -123,16 +123,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageVO<UserVO> pageQueryUser(UserPageQueryDTO userPageQueryDTO) {
+    public PageVO<UserVO> pageQueryUser(UserPageQueryBO userPageQueryBO) {
 
         LambdaQueryWrapper<UserEntity> wrapper = new LambdaQueryWrapper<>();
-        String username = userPageQueryDTO.getUsername();
+        String username = userPageQueryBO.getUsername();
         if (StringUtils.isNotBlank(username)) {
             wrapper.like(UserEntity::getUsername, username);
         }
 
 
-        PageHelper.startPage(userPageQueryDTO.getCurrent(), userPageQueryDTO.getSize());
+        PageHelper.startPage(userPageQueryBO.getCurrent(), userPageQueryBO.getSize());
         List<UserEntity> userEntityList = userMapper.selectList(wrapper);
 
         PageVO<UserEntity> userEntityPage = PageVO.build(userEntityList);
@@ -149,18 +149,18 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateUserPassword(UserPasswordUpdateDTO userPasswordUpdateDTO) {
+    public void updateUserPassword(UserPasswordUpdateBO userPasswordUpdateBO) {
 
         SecurityUtils.checkPermission();
 
-        doUpdateUserPassword(userPasswordUpdateDTO);
+        doUpdateUserPassword(userPasswordUpdateBO);
     }
 
 
     @Override
-    public void updateMyUserPassword(MyUserPasswordUpdateDTO myUserPasswordUpdateDTO) {
+    public void updateMyUserPassword(MyUserPasswordUpdateBO myUserPasswordUpdateBO) {
 
-        UserPasswordUpdateDTO dto = new UserPasswordUpdateDTO(SecurityUtils.getUserName(), myUserPasswordUpdateDTO.getPassword());
+        UserPasswordUpdateBO dto = new UserPasswordUpdateBO(SecurityUtils.getUserName(), myUserPasswordUpdateBO.getPassword());
         doUpdateUserPassword(dto);
     }
 
@@ -171,17 +171,17 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private void doUpdateUserPassword(UserPasswordUpdateDTO userPasswordUpdateDTO) {
-        UserEntity eldUserEntity = userMapper.selectById(userPasswordUpdateDTO.getId());
+    private void doUpdateUserPassword(UserPasswordUpdateBO userPasswordUpdateBO) {
+        UserEntity eldUserEntity = userMapper.selectById(userPasswordUpdateBO.getId());
         if (Objects.isNull(eldUserEntity)) {
             throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
         }
 
 
         // 2. password加密
-        String enPassword = Md5Utils.encrypt(userPasswordUpdateDTO.getPassword(), eldUserEntity.getSlat());
+        String enPassword = Md5Utils.encrypt(userPasswordUpdateBO.getPassword(), eldUserEntity.getSlat());
         UserEntity newUser = new UserEntity();
-        newUser.setId(userPasswordUpdateDTO.getId());
+        newUser.setId(userPasswordUpdateBO.getId());
         newUser.setPassword(enPassword);
         newUser.setVersion(eldUserEntity.getVersion());
 

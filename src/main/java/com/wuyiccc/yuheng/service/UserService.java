@@ -1,7 +1,7 @@
 package com.wuyiccc.yuheng.service;
 
 import com.wuyiccc.yuheng.infrastructure.pojo.PageVO;
-import com.wuyiccc.yuheng.pojo.dto.*;
+import com.wuyiccc.yuheng.pojo.bo.*;
 import com.wuyiccc.yuheng.pojo.entity.UserEntity;
 import com.wuyiccc.yuheng.pojo.vo.UserVO;
 
@@ -15,17 +15,17 @@ public interface UserService {
     /**
      * 用户登录
      *
-     * @param userLoginDTO 用户登录参数
+     * @param userLoginBO 用户登录参数
      * @return 用户登录token
      */
-    String login(UserLoginDTO userLoginDTO);
+    String login(UserLoginBO userLoginBO);
 
     /**
      * 新建用户
      *
-     * @param userCreateDTO 新建用户实体
+     * @param userCreateBO 新建用户实体
      */
-    void addUser(UserCreateDTO userCreateDTO);
+    void addUser(UserCreateBO userCreateBO);
 
 
     /**
@@ -55,32 +55,32 @@ public interface UserService {
     /**
      * 更新指定用户信息
      *
-     * @param userUpdateDTO 用户更新信息
+     * @param userUpdateBO 用户更新信息
      */
-    void updateUser(UserUpdateDTO userUpdateDTO);
+    void updateUser(UserUpdateBO userUpdateBO);
 
     /**
      * 分页查询用户信息
      *
-     * @param userPageQueryDTO 分页查询参数
+     * @param userPageQueryBO 分页查询参数
      * @return 分页结果
      */
-    PageVO<UserVO> pageQueryUser(UserPageQueryDTO userPageQueryDTO);
+    PageVO<UserVO> pageQueryUser(UserPageQueryBO userPageQueryBO);
 
 
     /**
      * 更新用户的密码
      *
-     * @param userPasswordUpdateDTO 更新之后的密码
+     * @param userPasswordUpdateBO 更新之后的密码
      */
-    void updateUserPassword(UserPasswordUpdateDTO userPasswordUpdateDTO);
+    void updateUserPassword(UserPasswordUpdateBO userPasswordUpdateBO);
 
     /**
      * 更新用户自己的密码
      *
-     * @param myUserPasswordUpdateDTO 用户自己的密码
+     * @param myUserPasswordUpdateBO 用户自己的密码
      */
-    void updateMyUserPassword(MyUserPasswordUpdateDTO myUserPasswordUpdateDTO);
+    void updateMyUserPassword(MyUserPasswordUpdateBO myUserPasswordUpdateBO);
 
     /**
      * 查询用户实体

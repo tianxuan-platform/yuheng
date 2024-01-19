@@ -1,7 +1,7 @@
 package com.wuyiccc.yuheng.convert;
 
-import com.wuyiccc.yuheng.pojo.dto.UserCreateDTO;
-import com.wuyiccc.yuheng.pojo.dto.UserUpdateDTO;
+import com.wuyiccc.yuheng.pojo.bo.UserCreateBO;
+import com.wuyiccc.yuheng.pojo.bo.UserUpdateBO;
 import com.wuyiccc.yuheng.pojo.entity.UserEntity;
 import com.wuyiccc.yuheng.pojo.vo.UserVO;
 import org.mapstruct.Mapper;
@@ -18,9 +18,9 @@ public interface UserConvert {
 
     UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
 
-    UserEntity convertToUserEntity(UserCreateDTO userCreateDTO);
+    UserEntity convertToUserEntity(UserCreateBO userCreateBO);
 
-    UserEntity convertToUserEntity(UserUpdateDTO userUpdateDTO);
+    UserEntity convertToUserEntity(UserUpdateBO userUpdateBO);
 
     UserVO covertToUserVO(UserEntity userEntity);
 

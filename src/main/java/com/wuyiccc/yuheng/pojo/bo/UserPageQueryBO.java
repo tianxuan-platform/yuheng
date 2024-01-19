@@ -1,4 +1,4 @@
-package com.wuyiccc.yuheng.pojo.dto;
+package com.wuyiccc.yuheng.pojo.bo;
 
 import com.wuyiccc.yuheng.infrastructure.pojo.PageParam;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPageQueryDTO extends PageParam {
+public class UserPageQueryBO extends PageParam {
 
     /**
      * 用户名
