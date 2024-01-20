@@ -64,7 +64,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql.local.wuyiccc.com:12011/vega?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://mysql.local.wuyiccc.com:12011/yuheng?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: 123
     hikari:
@@ -225,6 +225,9 @@ public class VegaApplication {
     }
 }
 ```
+
+## 1.6 创建数据库
+[yuheng.sql](doc%2Fsql%2Fyuheng.sql)
 
 # 2. 使用案例
 [vega-nginx服务管理平台](https://github.com/tianxuan-platform/vega)
