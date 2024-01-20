@@ -19,7 +19,7 @@
             <dependency>
                 <groupId>com.wuyiccc</groupId>
                 <artifactId>yuheng</artifactId>
-                <version>beta-0.1</version>
+                <version>beta-0.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.wuyiccc</groupId>
             <artifactId>yuheng</artifactId>
-            <version>beta-0.1</version>
+            <version>beta-0.2</version>
         </dependency>
 
     </dependencies>

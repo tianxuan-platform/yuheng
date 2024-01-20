@@ -13,7 +13,7 @@
 
     <groupId>com.wuyiccc</groupId>
     <artifactId>yuheng</artifactId>
-    <version>beta-0.1</version>
+    <version>beta-0.2</version>
     <packaging>jar</packaging>
     <name>yuheng</name>
     <description>玉衡基础平台</description>
