@@ -229,8 +229,6 @@ public class VegaApplication {
 ## 1.6 创建数据库
 [yuheng.sql](doc%2Fsql%2Fyuheng.sql)
 
-# 2. 使用案例
-[vega-nginx服务管理平台](https://github.com/tianxuan-platform/vega)
 
 # 2. api文档地址
 
@@ -238,3 +236,6 @@ public class VegaApplication {
 
 # 3. sql脚本地址
 [yuheng.sql](doc%2Fsql%2Fyuheng.sql)
+
+# 4. 使用案例
+[vega-nginx服务管理平台](https://github.com/tianxuan-platform/vega)
