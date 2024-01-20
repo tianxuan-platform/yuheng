@@ -54,15 +54,15 @@ public class JshUtils {
     /**
      * 初始化ssh链接
      *
-     * @param ip       远程Linux地址
+     * @param host       远程Linux地址
      * @param port     端口
      * @param username 用户名
      * @param password 密码
      */
-    public void init(String ip, Integer port, String username, String password) throws JSchException {
+    public void init(String host, Integer port, String username, String password) throws JSchException {
         JSch jsch = new JSch();
-        jsch.getSession(username, ip, port);
-        session = jsch.getSession(username, ip, port);
+        jsch.getSession(username, host, port);
+        session = jsch.getSession(username, host, port);
         session.setPassword(password);
         Properties sshConfig = new Properties();
         sshConfig.put("StrictHostKeyChecking", "no");
