@@ -3,16 +3,14 @@ package com.wuyiccc.yuheng.pojo.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.wuyiccc.yuheng.infrastructure.pojo.BaseEntity;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author wuyiccc
  * @date 2023/9/12 23:19
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
-@ToString
 @TableName(value = "t_user")
 public class UserEntity extends BaseEntity {
 
