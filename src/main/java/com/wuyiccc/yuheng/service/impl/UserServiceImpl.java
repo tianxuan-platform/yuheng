@@ -2,7 +2,7 @@ package com.wuyiccc.yuheng.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.page.PageMethod;
 import com.wuyiccc.yuheng.convert.UserConvert;
 import com.wuyiccc.yuheng.infrastructure.code.YuhengBizCode;
 import com.wuyiccc.yuheng.infrastructure.exception.CustomException;
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
         }
 
 
-        PageHelper.startPage(userPageQueryBO.getCurrent(), userPageQueryBO.getSize());
+        PageMethod.startPage(userPageQueryBO.getCurrent(), userPageQueryBO.getSize());
         List<UserEntity> userEntityList = userMapper.selectList(wrapper);
 
         PageVO<UserEntity> userEntityPage = PageVO.build(userEntityList);
@@ -160,7 +160,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateMyUserPassword(MyUserPasswordUpdateBO myUserPasswordUpdateBO) {
 
-        UserPasswordUpdateBO dto = new UserPasswordUpdateBO(SecurityUtils.getUserName(), myUserPasswordUpdateBO.getPassword());
+        UserPasswordUpdateBO dto = new UserPasswordUpdateBO(SecurityUtils.getUserId(), myUserPasswordUpdateBO.getPassword());
         doUpdateUserPassword(dto);
     }
 
