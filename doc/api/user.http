@@ -4,7 +4,7 @@ POST http://localhost:9000/user/login
 Content-Type: application/json
 
 {
-  "username": "20240118_test",
+  "username": "admin",
   "password": "123"
 }
 
@@ -12,52 +12,76 @@ Content-Type: application/json
 ### 退出登录
 POST http://localhost:9000/user/logout
 Content-Type: application/json
-token: G8_ZCJPXXaZ29baf0_CLB0RlkQ9DTYp0yR__
+token: Lh_czyGLprSHgi5XC_CexXFuLvYAEyWMyD__
 
 
 ### 获取当前登录用户的信息
 GET http://localhost:9000/user/getCurrentUserInfo
 Accept: application/json
-token: s7_STYrABQRwAdsAL_5EXZx45EwU7D0Bi8__
+token: oe_DWB1ZIAN08cnm5_IIFZTN9RM2A5HQJm__
 
 
 ### 新增用户
 POST http://localhost:9000/user/addUser
 Content-Type: application/json
-token: J3_UbyuWiBiTFigwz_UTH3QfQJtGNK55eX__
+token: oe_DWB1ZIAN08cnm5_IIFZTN9RM2A5HQJm__
 
 {
-  "username": "20240118_test",
+  "username": "test_20240120_01",
   "password": "123",
-  "nickname": "20240118_test_nickname",
-  "remark": "备注",
-  "faceUrl": "www.baidu.com"
+  "nickname": "测试用户20240120_01",
+  "remark": "这个是测试用户",
+  "faceUrl": "http://www.wuyiccc.com/imgs/avatar2.jpg"
 }
 
 ### 删除用户
-POST http://localhost:9000/user/removeUser?id=1747963438065545217
+POST http://localhost:9000/user/removeUser?id=1748544299584581633
 Content-Type: application/json
-token: XS_k6GXWEbn67gNYq_NMpIU2Z3k8yblM5Z__
+token: oe_DWB1ZIAN08cnm5_IIFZTN9RM2A5HQJm__
+
+### 获取指定用户id的信息
+GET http://localhost:9000/user/getUserById?id=1748544574596706305
+Accept: application/json
+token: oe_DWB1ZIAN08cnm5_IIFZTN9RM2A5HQJm__
 
 ### 更新用户信息
 POST http://localhost:9000/user/updateUser
 Content-Type: application/json
-token: o6_9k7eoybeAmzxS2_a5TtUJclSKXFCvM5__
+token: oe_DWB1ZIAN08cnm5_IIFZTN9RM2A5HQJm__
 
 {
-  "id": "1747982592428503041",
-  "nickname": "updatenickname",
+  "id": "1748544574596706305",
+  "nickname": "测试用户20240120_01",
   "remark": "更新备注",
-  "faceUrl": "www.baidu.com"
+  "faceUrl": "http://www.wuyiccc.com/imgs/avatar2.jpg"
 }
 
 ### 分页查询用户
 POST http://localhost:9000/user/pageQueryUser
 Content-Type: application/json
-token: o6_9k7eoybeAmzxS2_a5TtUJclSKXFCvM5__
+token: oe_DWB1ZIAN08cnm5_IIFZTN9RM2A5HQJm__
 
 {
   "username": "",
   "current": 1,
-  "size": 2
+  "size": 10
+}
+
+### 更新当前用户密码
+POST http://localhost:9000/user/updateMyPassword
+Content-Type: application/json
+token: eO_rNHsumStVtyz7A_TBXrz6yocIz4dIdc__
+
+{
+  "password": "1234"
+}
+
+### 更新指定用户密码
+POST http://localhost:9000/user/updateUserPassword
+Content-Type: application/json
+token: OV_ov0Bgyxx58ZS5a_A8ptX7vGxcRht5A0__
+
+{
+  "id": "1748544574596706305",
+  "password": "123"
 }

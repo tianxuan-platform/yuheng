@@ -27,4 +27,4 @@ create table yuheng.t_user
 
 
 INSERT INTO yuheng.t_user (id, username, password, slat, nickname, remark, face_url, gmt_create, create_id, gmt_modified, update_id, del_flag, del_id, version)
-VALUES ('1702676846703136770', 'admin', '8d0df03c2ab1b9bcce717de8741f15a5', '777918', '管理员', '这个是管理员账号备注信息', 'http://minio.myk8s.wuyiccc.com:31010/yuheng/b0f75bedeaae41669f0b5bac2093cf8a20180503205620_avjcu.jpg', '2023-09-15 21:32:49', '1702671830822948866', '2024-01-19 00:32:52', '-1', 0, '-1', 1)
+VALUES ('1702676846703136770', 'admin', '8d0df03c2ab1b9bcce717de8741f15a5', '777918', '管理员', '这个是管理员账号备注信息', 'http://www.wuyiccc.com/imgs/avatar2.jpg', '2023-09-15 21:32:49', '1702671830822948866', '2024-01-19 00:32:52', '-1', 0, '-1', 1)
