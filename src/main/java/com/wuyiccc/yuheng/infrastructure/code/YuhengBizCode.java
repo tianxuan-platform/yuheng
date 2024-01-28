@@ -21,7 +21,9 @@ public enum YuhengBizCode implements IBizCode {
 
     USER_NAME_OR_PASSWORD_ERROR("1_3", "用户名或密码错误"),
 
-    NO_PERMISSION("1_4", "用户无操作权限");
+    NO_PERMISSION("1_4", "用户无操作权限"),
+
+    NOT_LOGIN_EXCEPTION("1_5", "用户未登录"),
     ;
 
     /**

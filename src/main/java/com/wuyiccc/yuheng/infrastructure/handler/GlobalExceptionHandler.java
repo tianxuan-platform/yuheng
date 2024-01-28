@@ -1,5 +1,6 @@
 package com.wuyiccc.yuheng.infrastructure.handler;
 
+import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
 import com.wuyiccc.yuheng.infrastructure.code.ABizCode;
 import com.wuyiccc.yuheng.infrastructure.code.YuhengBizCode;
@@ -40,6 +41,12 @@ public class GlobalExceptionHandler {
         } else {
             return R.fail(e.getBizCode(), e.getMessage());
         }
+    }
+
+    @ExceptionHandler(NotLoginException.class)
+    public R<String> notLoginException(ServletWebRequest request, NotLoginException e) {
+        printErrorLog(request, e);
+        return R.fail(YuhengBizCode.NOT_LOGIN_EXCEPTION, e.getMessage());
     }
 
     @ExceptionHandler(SaTokenException.class)
