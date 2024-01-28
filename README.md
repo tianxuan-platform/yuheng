@@ -64,7 +64,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql.local.wuyiccc.com:12011/yuheng?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://mysql.local.wuyiccc.com:12011/vega?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: 123
     hikari:
@@ -109,28 +109,9 @@ logging:
 
 
 
-
-
 ####################
-# 鉴权配置
+# yuheng配置
 ####################
-sa-token:
-  token-name: token
-  # token有效期，单位s 默认1天, -1代表永不过期
-  timeout: 86400
-  # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
-  active-timeout: -1
-  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
-  is-concurrent: false
-  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
-  is-share: false
-  # token风格
-  token-style: tik
-  # 是否输出操作日志
-  is-log: true
-  isReadCookie: false
-  isReadBody: false
-
 # 安全放行路径
 yuheng:
   security:
@@ -138,6 +119,10 @@ yuheng:
     ignore:
       urls:
         - /user/login
+        - /heartbeat
+        - /error
+    jwt:
+      key: yuheng_tianxuan_platform_jwt_key123
   # redisson 配置
   redisson:
     # redis key前缀
