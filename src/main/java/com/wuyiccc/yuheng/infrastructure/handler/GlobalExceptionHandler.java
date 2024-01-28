@@ -46,13 +46,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotLoginException.class)
     public R<String> notLoginException(ServletWebRequest request, NotLoginException e) {
         printErrorLog(request, e);
-        return R.fail(YuhengBizCode.NOT_LOGIN_EXCEPTION, e.getMessage());
+        return R.fail(YuhengBizCode.ERROR_NOT_LOGIN, e.getMessage());
     }
 
     @ExceptionHandler(SaTokenException.class)
     public R<String> saTokenExceptionHandler(ServletWebRequest request, SaTokenException e) {
         printErrorLog(request, e);
-        return R.fail(YuhengBizCode.SA_TOKEN_EXCEPTION, e.getMessage());
+        return R.fail(YuhengBizCode.ERROR_SA_TOKEN, e.getMessage());
     }
 
 

@@ -15,15 +15,15 @@ import lombok.Getter;
 @Getter
 public enum YuhengBizCode implements IBizCode {
 
-    SA_TOKEN_EXCEPTION("1_1", "sa-token权限异常"),
+    ERROR_SA_TOKEN("1_1", "sa-token权限异常"),
 
-    USER_NOT_FOUND("1_2", "用户不存在"),
+    ERROR_USER_NOT_FOUND("1_2", "用户不存在"),
 
-    USER_NAME_OR_PASSWORD_ERROR("1_3", "用户名或密码错误"),
+    ERROR_USER_NAME_OR_PASSWORD("1_3", "用户名或密码错误"),
 
-    NO_PERMISSION("1_4", "用户无操作权限"),
+    ERROR_NO_PERMISSION("1_4", "用户无操作权限"),
 
-    NOT_LOGIN_EXCEPTION("1_5", "用户未登录"),
+    ERROR_NOT_LOGIN("1_5", "用户未登录"),
     ;
 
     /**

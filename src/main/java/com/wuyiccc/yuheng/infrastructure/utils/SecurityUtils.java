@@ -38,7 +38,7 @@ public class SecurityUtils {
 
     public static void checkPermission() {
         if (!isAdmin()) {
-            throw new CustomException(YuhengBizCode.NO_PERMISSION);
+            throw new CustomException(YuhengBizCode.ERROR_NO_PERMISSION);
         }
     }
 }

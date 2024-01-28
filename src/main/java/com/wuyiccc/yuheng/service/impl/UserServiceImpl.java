@@ -44,13 +44,13 @@ public class UserServiceImpl implements UserService {
         List<UserEntity> userEntityList = userMapper.selectList(wrapper);
 
         if (CollectionUtils.isEmpty(userEntityList)) {
-            throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
+            throw new CustomException(YuhengBizCode.ERROR_USER_NOT_FOUND);
         }
         UserEntity userEntity = userEntityList.get(0);
         String slat = userEntity.getSlat();
         String enPassword = Md5Utils.encrypt(userLoginBO.getPassword(), slat);
         if (!Objects.equals(userEntity.getPassword(), enPassword)) {
-            throw new CustomException(YuhengBizCode.USER_NAME_OR_PASSWORD_ERROR);
+            throw new CustomException(YuhengBizCode.ERROR_USER_NAME_OR_PASSWORD);
         }
         StpUtil.login(userEntity.getId());
         return StpUtil.getTokenValue();
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = userMapper.selectById(userId);
         if (Objects.isNull(userEntity)) {
-            throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
+            throw new CustomException(YuhengBizCode.ERROR_USER_NOT_FOUND);
         }
         return UserConvert.INSTANCE.covertToUserVO(userEntity);
     }
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
 
         int res = userMapper.deleteById(id);
         if (res == 0) {
-            throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
+            throw new CustomException(YuhengBizCode.ERROR_USER_NOT_FOUND);
         }
     }
 
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = userMapper.selectById(id);
         if (Objects.isNull(userEntity)) {
-            throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
+            throw new CustomException(YuhengBizCode.ERROR_USER_NOT_FOUND);
         }
 
         return UserConvert.INSTANCE.covertToUserVO(userEntity);
@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = UserConvert.INSTANCE.convertToUserEntity(userUpdateBO);
         int res = userMapper.updateById(userEntity);
         if (res != 1) {
-            throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
+            throw new CustomException(YuhengBizCode.ERROR_USER_NOT_FOUND);
         }
     }
 
@@ -174,7 +174,7 @@ public class UserServiceImpl implements UserService {
     private void doUpdateUserPassword(UserPasswordUpdateBO userPasswordUpdateBO) {
         UserEntity eldUserEntity = userMapper.selectById(userPasswordUpdateBO.getId());
         if (Objects.isNull(eldUserEntity)) {
-            throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
+            throw new CustomException(YuhengBizCode.ERROR_USER_NOT_FOUND);
         }
 
 
@@ -187,7 +187,7 @@ public class UserServiceImpl implements UserService {
 
         int res = userMapper.updateById(newUser);
         if (res != 1) {
-            throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
+            throw new CustomException(YuhengBizCode.ERROR_USER_NOT_FOUND);
         }
     }
 
