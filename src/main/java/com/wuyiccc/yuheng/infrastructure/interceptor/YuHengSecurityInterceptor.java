@@ -43,7 +43,7 @@ public class YuHengSecurityInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        log.info("YuHengSecurityInterceptor拦截器 拦截请求接口为: {}", request.getRequestURL());
+        log.info("YuHengSecurityInterceptor拦截器 拦截请求接口为: {}: {}", request.getMethod(), request.getRequestURL());
 
         UserService userService = SpringUtils.getBean(UserService.class);
 
