@@ -1,12 +1,16 @@
 package com.wuyiccc.yuheng.infrastructure.handler;
 
-import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.exception.SaTokenException;
 import com.wuyiccc.yuheng.infrastructure.code.ABizCode;
 import com.wuyiccc.yuheng.infrastructure.code.YuhengBizCode;
 import com.wuyiccc.yuheng.infrastructure.exception.CustomException;
+import com.wuyiccc.yuheng.infrastructure.exception.security.NotLoginException;
 import com.wuyiccc.yuheng.infrastructure.pojo.R;
 import com.wuyiccc.yuheng.infrastructure.utils.JsonUtils;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DuplicateKeyException;
@@ -46,15 +50,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotLoginException.class)
     public R<String> notLoginException(ServletWebRequest request, NotLoginException e) {
         printErrorLog(request, e);
-        return R.fail(YuhengBizCode.ERROR_USER_NOT_LOGIN, e.getMessage());
+        return R.fail(e.getBizCode());
     }
 
-    @ExceptionHandler(SaTokenException.class)
-    public R<String> saTokenExceptionHandler(ServletWebRequest request, SaTokenException e) {
+    @ExceptionHandler({ExpiredJwtException.class
+            , UnsupportedJwtException.class
+            , MalformedJwtException.class
+            , SignatureException.class
+    })
+    public R<String> returnSignatureException(ServletWebRequest request, JwtException e) {
         printErrorLog(request, e);
-        return R.fail(YuhengBizCode.ERROR_SA_TOKEN, e.getMessage());
+        return R.fail(YuhengBizCode.ERROR_JWT_CHECK_FAILED);
     }
-
 
 
     @ExceptionHandler(DuplicateKeyException.class)

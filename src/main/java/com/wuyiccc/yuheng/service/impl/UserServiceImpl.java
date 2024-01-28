@@ -1,12 +1,13 @@
 package com.wuyiccc.yuheng.service.impl;
 
-import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.page.PageMethod;
 import com.wuyiccc.yuheng.convert.UserConvert;
 import com.wuyiccc.yuheng.infrastructure.code.YuhengBizCode;
 import com.wuyiccc.yuheng.infrastructure.exception.CustomException;
 import com.wuyiccc.yuheng.infrastructure.pojo.PageVO;
+import com.wuyiccc.yuheng.infrastructure.utils.JsonUtils;
+import com.wuyiccc.yuheng.infrastructure.utils.JwtUtils;
 import com.wuyiccc.yuheng.infrastructure.utils.Md5Utils;
 import com.wuyiccc.yuheng.infrastructure.utils.SecurityUtils;
 import com.wuyiccc.yuheng.mapper.UserMapper;
@@ -52,8 +53,7 @@ public class UserServiceImpl implements UserService {
         if (!Objects.equals(userEntity.getPassword(), enPassword)) {
             throw new CustomException(YuhengBizCode.ERROR_USER_NAME_OR_PASSWORD);
         }
-        StpUtil.login(userEntity.getId());
-        return StpUtil.getTokenValue();
+        return JwtUtils.createJwtWithPrefix(JwtUtils.ADMIN_PREFIX, JsonUtils.objectToJson(UserConvert.INSTANCE.covertToUserVO(userEntity)));
     }
 
 

@@ -1,6 +1,5 @@
 package com.wuyiccc.yuheng.controller;
 
-import cn.dev33.satoken.stp.StpUtil;
 import com.wuyiccc.yuheng.infrastructure.pojo.PageVO;
 import com.wuyiccc.yuheng.infrastructure.pojo.R;
 import com.wuyiccc.yuheng.pojo.bo.*;
@@ -44,7 +43,6 @@ public class UserController {
     @PostMapping("/logout")
     public R<String> logout() {
 
-        StpUtil.logout();
         return R.ok();
     }
 

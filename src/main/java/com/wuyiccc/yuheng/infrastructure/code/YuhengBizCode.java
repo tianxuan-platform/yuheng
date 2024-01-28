@@ -15,7 +15,7 @@ import lombok.Getter;
 @Getter
 public enum YuhengBizCode implements IBizCode {
 
-    ERROR_SA_TOKEN("1_1", "sa-token权限异常"),
+    ERROR_AUTH("1_1", "权限异常"),
 
     ERROR_USER_NOT_FOUND("1_2", "用户不存在"),
 
@@ -24,6 +24,8 @@ public enum YuhengBizCode implements IBizCode {
     ERROR_USER_NO_PERMISSION("1_4", "用户无操作权限"),
 
     ERROR_USER_NOT_LOGIN("1_5", "用户未登录"),
+
+    ERROR_JWT_CHECK_FAILED("1_6", "jwt校验失败")
     ;
 
     /**
