@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotLoginException.class)
     public R<String> notLoginException(ServletWebRequest request, NotLoginException e) {
         printErrorLog(request, e);
-        return R.fail(YuhengBizCode.ERROR_NOT_LOGIN, e.getMessage());
+        return R.fail(YuhengBizCode.ERROR_USER_NOT_LOGIN, e.getMessage());
     }
 
     @ExceptionHandler(SaTokenException.class)
