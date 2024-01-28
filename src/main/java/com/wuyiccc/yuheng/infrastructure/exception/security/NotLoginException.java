@@ -1,6 +1,5 @@
 package com.wuyiccc.yuheng.infrastructure.exception.security;
 
-import com.wuyiccc.yuheng.infrastructure.code.IBizCode;
 import com.wuyiccc.yuheng.infrastructure.code.YuhengBizCode;
 import com.wuyiccc.yuheng.infrastructure.exception.CustomException;
 
@@ -11,6 +10,6 @@ import com.wuyiccc.yuheng.infrastructure.exception.CustomException;
 public class NotLoginException extends CustomException {
 
     public NotLoginException() {
-        super(YuhengBizCode.ERROR_USER_NOT_LOGIN);
+        super(YuhengBizCode.USER_NOT_LOGIN);
     }
 }

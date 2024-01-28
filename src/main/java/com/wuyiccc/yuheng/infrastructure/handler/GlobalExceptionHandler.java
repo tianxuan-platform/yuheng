@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
     })
     public R<String> returnSignatureException(ServletWebRequest request, JwtException e) {
         printErrorLog(request, e);
-        return R.fail(YuhengBizCode.ERROR_JWT_CHECK_FAILED);
+        return R.fail(YuhengBizCode.JWT_CHECK_FAILED);
     }
 
 

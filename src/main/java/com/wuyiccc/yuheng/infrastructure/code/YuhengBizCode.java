@@ -15,17 +15,17 @@ import lombok.Getter;
 @Getter
 public enum YuhengBizCode implements IBizCode {
 
-    ERROR_AUTH("1_1", "权限异常"),
+    AUTH_ERROR("1_1", "权限异常"),
 
-    ERROR_USER_NOT_FOUND("1_2", "用户不存在"),
+    USER_NOT_FOUND("1_2", "用户不存在"),
 
-    ERROR_USER_NAME_OR_PASSWORD("1_3", "用户名或密码错误"),
+    USER_NAME_OR_PASSWORD_ERROR("1_3", "用户名或密码错误"),
 
-    ERROR_USER_NO_PERMISSION("1_4", "用户无操作权限"),
+    USER_NO_PERMISSION("1_4", "用户无操作权限"),
 
-    ERROR_USER_NOT_LOGIN("1_5", "用户未登录"),
+    USER_NOT_LOGIN("1_5", "用户未登录"),
 
-    ERROR_JWT_CHECK_FAILED("1_6", "jwt校验失败")
+    JWT_CHECK_FAILED("1_6", "jwt校验失败")
     ;
 
     /**

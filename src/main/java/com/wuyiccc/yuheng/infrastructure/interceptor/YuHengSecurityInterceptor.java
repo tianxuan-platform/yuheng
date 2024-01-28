@@ -83,7 +83,7 @@ public class YuHengSecurityInterceptor implements HandlerInterceptor {
 
         UserEntity userEntity = userService.findUserEntityById(userVO.getId());
         if (Objects.isNull(userEntity)) {
-            throw new CustomException(YuhengBizCode.ERROR_USER_NOT_FOUND);
+            throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
         }
         SecurityContext.setUserId(userEntity.getId());
         SecurityContext.setUserName(userEntity.getUsername());

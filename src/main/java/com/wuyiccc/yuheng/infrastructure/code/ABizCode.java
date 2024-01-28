@@ -23,6 +23,7 @@ public enum ABizCode implements IBizCode {
 
     INVALID_PARAM("0_3", "参数校验失败"),
 
+    API_NOT_FOUND("0_4", "api接口不存在")
     ;
 
     /**
