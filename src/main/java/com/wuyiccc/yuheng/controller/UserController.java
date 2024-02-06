@@ -59,6 +59,9 @@ public class UserController {
     }
 
 
+    /**
+     * 新增用户
+     */
     @PostMapping("/addUser")
     public R<String> addUser(@Valid @RequestBody UserCreateBO userCreateBO) {
 
@@ -66,6 +69,9 @@ public class UserController {
         return R.ok();
     }
 
+    /**
+     * 删除用户
+     */
     @PostMapping("/removeUser")
     public R<String> removeUser(@RequestParam("id") String id) {
 
@@ -74,6 +80,9 @@ public class UserController {
     }
 
 
+    /**
+     * 根据id获取用户信息
+     */
     @GetMapping("/getUserById")
     public R<UserVO> getUserById(@RequestParam("id") String id) {
 
@@ -82,6 +91,9 @@ public class UserController {
     }
 
 
+    /**
+     * 更新用户信息
+     */
     @PostMapping("/updateUser")
     public R<String> updateUser(@Valid @RequestBody UserUpdateBO userUpdateBO) {
 
@@ -89,6 +101,9 @@ public class UserController {
         return R.ok();
     }
 
+    /**
+     * 分页查询用户信息
+     */
     @PostMapping("/pageQueryUser")
     public R<PageVO<UserVO>> pageQueryUser(@Valid @RequestBody UserPageQueryBO userPageQueryBO) {
 
@@ -96,6 +111,9 @@ public class UserController {
         return R.ok(pageResult);
     }
 
+    /**
+     * 更新当前登录用户密码
+     */
     @PostMapping("/updateMyPassword")
     public R<String> updateMyPassword(@Valid @RequestBody MyUserPasswordUpdateBO myUserPasswordUpdateBO) {
 
@@ -103,6 +121,9 @@ public class UserController {
         return R.ok();
     }
 
+    /**
+     * 更新指定户名密码
+     */
     @PostMapping("/updateUserPassword")
     public R<String> updateUserPassword(@Valid @RequestBody UserPasswordUpdateBO userPasswordUpdateBO) {
 
