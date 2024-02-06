@@ -3,6 +3,6 @@ GET http://localhost:9000/heartbeat
 Accept: application/json
 
 
-### error接口
+### 404 error接口
 GET http://localhost:9000/error
 Accept: application/json

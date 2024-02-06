@@ -217,7 +217,9 @@ public class VegaApplication {
 
 # 2. api文档地址
 
-[user.http](doc%2Fapi%2Fuser.http)
+[User.http](doc%2Fapi%2FUser.http)
+
+[Index.http](doc%2Fapi%2FIndex.http)
 
 # 3. sql脚本地址
 [yuheng.sql](doc%2Fsql%2Fyuheng.sql)
