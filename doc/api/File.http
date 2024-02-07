@@ -1,0 +1,14 @@
+### 文件上传
+POST http://localhost:9000/file/uploadFile
+token: admin@eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ7XCJpZFwiOlwiMTcwMjY3Njg0NjcwMzEzNjc3MFwiLFwidXNlcm5hbWVcIjpcImFkbWluXCIsXCJuaWNrbmFtZVwiOlwi566h55CG5ZGYXCIsXCJyZW1hcmtcIjpcIui_meS4quaYr-euoeeQhuWRmOi0puWPt-Wkh-azqOS_oeaBr1wiLFwiZmFjZVVybFwiOlwiaHR0cDovL21pbmlvLm15azhzLnd1eWljY2MuY29tOjMxMDEwL3l1aGVuZy9iMGY3NWJlZGVhYWU0MTY2OWYwYjViYWMyMDkzY2Y4YTIwMTgwNTAzMjA1NjIwX2F2amN1LmpwZ1wiLFwiZ210Q3JlYXRlXCI6XCIyMDIzLTA5LTE1IDIxOjMyOjQ5XCJ9In0.N1l52nBouFmdJTNtS9oQLna_734R1Pjg6SlZOWYvcGZYMHHZgKAqIa1mqsvG4Bni
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="test.png"
+Content-Type: image/jpeg
+
+< ./logo/logo.png
+--WebAppBoundary--

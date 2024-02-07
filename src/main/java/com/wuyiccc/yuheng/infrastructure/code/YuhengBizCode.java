@@ -25,7 +25,9 @@ public enum YuhengBizCode implements IBizCode {
 
     USER_NOT_LOGIN("1_5", "用户未登录"),
 
-    JWT_CHECK_FAILED("1_6", "jwt校验失败")
+    JWT_CHECK_FAILED("1_6", "jwt校验失败"),
+
+    FILE_UPLOAD_FAILED("1_7", "文件上传失败")
     ;
 
     /**

@@ -145,6 +145,11 @@ yuheng:
       timeout: 3000
       # 发布和订阅连接池大小
       subscriptionConnectionPoolSize: 50
+  minio:
+    endpoint: http://minio.local.wuyiccc.com:12031
+    bucket: vega
+    access-key: admin
+    secret-key: 12345678
 ####################
 ```
 
