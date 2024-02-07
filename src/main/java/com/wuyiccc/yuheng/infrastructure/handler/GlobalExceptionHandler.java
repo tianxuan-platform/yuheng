@@ -20,6 +20,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -82,6 +83,13 @@ public class GlobalExceptionHandler {
             msg = errors.values().toArray(new String[]{})[0];
         }
         return R.fail(ABizCode.INVALID_PARAM, msg);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public R<String> maxUploadSizeExceededExceptionHandler(ServletWebRequest request, MaxUploadSizeExceededException e) {
+        printErrorLog(request, e);
+
+        return R.fail(ABizCode.FILE_SIZE_EXCEEDS_LIMIT);
     }
 
     @ExceptionHandler(Exception.class)

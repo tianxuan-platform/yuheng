@@ -23,7 +23,9 @@ public enum ABizCode implements IBizCode {
 
     INVALID_PARAM("0_3", "参数校验失败"),
 
-    API_NOT_FOUND("0_4", "api接口不存在")
+    API_NOT_FOUND("0_4", "api接口不存在"),
+
+    FILE_SIZE_EXCEEDS_LIMIT("0_5", "文件大小超出限制")
     ;
 
     /**
