@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author wuyiccc
@@ -168,6 +169,16 @@ public class UserServiceImpl implements UserService {
     public UserEntity findUserEntityById(String id) {
 
         return userMapper.selectById(id);
+    }
+
+    @Override
+    public void removeUserList(List<String> userList) {
+
+        if (CollectionUtils.isEmpty(userList)) {
+            return;
+        }
+        userList = userList.stream().distinct().collect(Collectors.toList());
+        userMapper.deleteBatchIds(userList);
     }
 
 

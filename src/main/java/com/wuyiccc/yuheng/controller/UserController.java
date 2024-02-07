@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author wuyiccc
@@ -76,6 +77,13 @@ public class UserController {
     public R<String> removeUser(@RequestParam("id") String id) {
 
         userService.removeUser(id);
+        return R.ok();
+    }
+
+    @PostMapping("/removeUserList")
+    public R<String> removeUserList(@RequestParam("idList")List<String> userList) {
+
+        userService.removeUserList(userList);
         return R.ok();
     }
 

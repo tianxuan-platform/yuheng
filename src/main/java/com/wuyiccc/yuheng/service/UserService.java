@@ -5,6 +5,8 @@ import com.wuyiccc.yuheng.pojo.bo.*;
 import com.wuyiccc.yuheng.pojo.entity.UserEntity;
 import com.wuyiccc.yuheng.pojo.vo.UserVO;
 
+import java.util.List;
+
 /**
  * @author wuyiccc
  * @date 2023/9/12 23:22
@@ -86,4 +88,10 @@ public interface UserService {
      * 查询用户实体
      */
     UserEntity findUserEntityById(String id);
+
+    /**
+     * 批量删除用户
+     * @param userList 需要删除的用户id列表
+     */
+    void removeUserList(List<String> userList);
 }
