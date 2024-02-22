@@ -4,6 +4,7 @@ import com.wuyiccc.yuheng.infrastructure.code.YuhengBizCode;
 import com.wuyiccc.yuheng.infrastructure.constants.DbConstants;
 import com.wuyiccc.yuheng.infrastructure.context.SecurityContext;
 import com.wuyiccc.yuheng.infrastructure.exception.CustomException;
+import com.wuyiccc.yuheng.pojo.entity.UserEntity;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -40,5 +41,14 @@ public class SecurityUtils {
         if (!isAdmin()) {
             throw new CustomException(YuhengBizCode.USER_NO_PERMISSION);
         }
+    }
+
+    public static boolean isAdmin(UserEntity userEntity) {
+
+        if (Objects.nonNull(userEntity))  {
+            String username = userEntity.getUsername();
+            return Objects.equals(username, DbConstants.ADMIN_USERNAME);
+        }
+        return false;
     }
 }

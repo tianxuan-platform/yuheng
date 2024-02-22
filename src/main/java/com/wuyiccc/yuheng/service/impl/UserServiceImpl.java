@@ -93,6 +93,11 @@ public class UserServiceImpl implements UserService {
 
         SecurityUtils.checkPermission();
 
+        UserEntity waitDeleteUser = userMapper.selectById(id);
+        if (SecurityUtils.isAdmin(waitDeleteUser)) {
+            throw new CustomException(YuhengBizCode.USER_NO_PERMISSION);
+        }
+
         int res = userMapper.deleteById(id);
         if (res == 0) {
             throw new CustomException(YuhengBizCode.USER_NOT_FOUND);
@@ -178,6 +183,10 @@ public class UserServiceImpl implements UserService {
             return;
         }
         userList = userList.stream().distinct().collect(Collectors.toList());
+
+        List<UserEntity> waitDeleteUserIdList = userMapper.selectBatchIds(userList);
+        waitDeleteUserIdList.forEach(SecurityUtils::isAdmin);
+
         userMapper.deleteBatchIds(userList);
     }
 
