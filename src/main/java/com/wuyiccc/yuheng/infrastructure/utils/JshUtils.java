@@ -67,7 +67,7 @@ public class JshUtils {
         Properties sshConfig = new Properties();
         sshConfig.put("StrictHostKeyChecking", "no");
         session.setConfig(sshConfig);
-        session.connect(60 * 1000);
+        session.connect(6 * 1000);
         // 打开执行shell指令的通道
         channel = session.openChannel("exec");
         channelExec = (ChannelExec) channel;
