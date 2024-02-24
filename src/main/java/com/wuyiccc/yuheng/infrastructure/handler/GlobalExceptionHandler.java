@@ -14,6 +14,7 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -85,6 +86,21 @@ public class GlobalExceptionHandler {
         return R.fail(ABizCode.INVALID_PARAM, msg);
     }
 
+
+    @ExceptionHandler(BindException.class)
+    public R<Map<String, String>> bindExceptionHandler(ServletWebRequest request, BindException e) {
+
+        printErrorLog(request, e);
+
+        BindingResult result = e.getBindingResult();
+        Map<String, String> errors = getErrors(result);
+        String msg = StringUtils.EMPTY;
+        if (!errors.values().isEmpty()) {
+            msg = errors.values().toArray(new String[]{})[0];
+        }
+        return R.fail(ABizCode.INVALID_PARAM, msg);
+    }
+
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public R<String> maxUploadSizeExceededExceptionHandler(ServletWebRequest request, MaxUploadSizeExceededException e) {
         printErrorLog(request, e);
@@ -114,7 +130,7 @@ public class GlobalExceptionHandler {
     private void printErrorLog(ServletWebRequest request, Exception ex) {
 
         try {
-            String parameters = "";
+            String parameters;
             parameters = JsonUtils.objectToJson(request.getParameterMap());
             if (log.isErrorEnabled()) {
                 log.error("统一异常拦截日志打印 -> uri= {} params={} ",
