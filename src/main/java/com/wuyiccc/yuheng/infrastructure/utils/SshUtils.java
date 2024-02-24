@@ -5,6 +5,7 @@ import com.wuyiccc.yuheng.infrastructure.pojo.dto.SshConnectionConfigDTO;
 import com.wuyiccc.yuheng.infrastructure.pojo.dto.SshExecResultDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
@@ -37,6 +38,7 @@ import java.util.Properties;
  * <p>
  * System.out.println(instance.execCmd("docker ps"));
  */
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SshUtils {
 
@@ -46,6 +48,7 @@ public class SshUtils {
     private Channel channel;
 
     private ChannelExec channelExec;
+
 
 
     public static SshUtils getInstance() {
@@ -153,5 +156,24 @@ public class SshUtils {
                 , sshConnectionConfigDTO.getUsername()
                 , sshConnectionConfigDTO.getPassword());
         return instance.execCmd(command);
+    }
+
+    /**
+     * 测试服务器连接
+     */
+    public static boolean testConnect(SshConnectionConfigDTO sshConnectionConfigDTO) {
+
+        SshUtils instance = SshUtils.getInstance();
+        try {
+            instance.init(sshConnectionConfigDTO.getHost()
+                    , sshConnectionConfigDTO.getPort()
+                    , sshConnectionConfigDTO.getUsername()
+                    , sshConnectionConfigDTO.getPassword());
+            return true;
+        } catch (Exception e) {
+            log.error("连接失败", e);
+            return false;
+        }
+
     }
 }
