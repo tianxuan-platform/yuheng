@@ -5,6 +5,7 @@ import com.wuyiccc.yuheng.infrastructure.pojo.dto.SshExecResultDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannelEvent;
@@ -78,12 +79,22 @@ public class SshUtils {
                 channel.open().verify(3000);
                 channel.waitFor(EnumSet.of(ClientChannelEvent.CLOSED), 0L);
 
-                // 换行
-                String[] msgArray = outputStream.toString().split("\\n");
-                String[] errorMsgArray = errorOutPutStream.toString().split("\\n");
-                List<String> msgList = new ArrayList<>(msgArray.length + errorMsgArray.length);
-                msgList.addAll(Arrays.asList(msgArray));
-                msgList.addAll(Arrays.asList(errorMsgArray));
+                List<String> msgList = new ArrayList<>();
+                String outputStr = outputStream.toString();
+                if (StringUtils.isNotEmpty(outputStr)) {
+                    // 换行
+                    String[] msgArray = outputStr.split("\\n");
+                    if (msgArray.length > 0) {
+                        msgList.addAll(Arrays.asList(msgArray));
+                    }
+                }
+                String errorStr = errorOutPutStream.toString();
+                if (StringUtils.isNotEmpty(errorStr)) {
+                    String[] errorMsgArray = errorStr.split("\\n");
+                    if (errorMsgArray.length > 0) {
+                        msgList.addAll(Arrays.asList(errorMsgArray));
+                    }
+                }
                 return new SshExecResultDTO(msgList);
             }
         } catch (Exception e) {
