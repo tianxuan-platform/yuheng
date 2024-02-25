@@ -88,7 +88,9 @@ public class SshUtils {
             }
         } catch (Exception e) {
             log.error("执行命令失败", e);
-            return new SshExecResultDTO();
+            List<String> msgList = new ArrayList<>();
+            msgList.add("执行命令失败: " + e.getMessage());
+            return new SshExecResultDTO(msgList);
         } finally {
             closeData(client, session);
         }
