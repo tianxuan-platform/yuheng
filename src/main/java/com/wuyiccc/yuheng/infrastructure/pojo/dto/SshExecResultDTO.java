@@ -14,13 +14,14 @@ import lombok.NoArgsConstructor;
 @Data
 public class SshExecResultDTO {
 
-    /**
-     * 执行结果是否正确
-     */
-    private boolean execResultFlag;
 
     /**
-     * 返回信息
+     * 正常输出流信息
      */
     private String msg;
+
+    /**
+     * 异常输出流信息
+     */
+    private String errorMsg;
 }
