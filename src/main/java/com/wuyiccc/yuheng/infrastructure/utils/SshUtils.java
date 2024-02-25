@@ -10,9 +10,13 @@ import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannelEvent;
 import org.apache.sshd.client.session.ClientSession;
+import org.apache.sshd.sftp.client.SftpClientFactory;
+import org.apache.sshd.sftp.client.fs.SftpFileSystem;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -106,6 +110,61 @@ public class SshUtils {
             closeData(client, session);
         }
     }
+
+    public static SshExecResultDTO uploadFile(SshConnectionConfigDTO config, String localFilePath, String remoteFilePath) {
+        SshClient client = null;
+        ClientSession session = null;
+
+        try {
+            client = SshClient.setUpDefaultClient();
+            client.start();
+            session = client.connect(config.getUsername(), config.getHost(), config.getPort()).verify(3000).getClientSession();
+            session.addPasswordIdentity(config.getPassword());
+            session.auth().verify(3000);
+
+            List<String> msgList = new ArrayList<>();
+
+            // 删除原文件
+            try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                 ByteArrayOutputStream errorOutPutStream = new ByteArrayOutputStream();
+                 ChannelExec channel = session.createExecChannel("rm -rf " + remoteFilePath)
+            ) {
+                channel.setOut(outputStream);
+                channel.setErr(errorOutPutStream);
+                channel.open().verify(3000);
+                channel.waitFor(EnumSet.of(ClientChannelEvent.CLOSED), 0L);
+
+                String outputStr = outputStream.toString();
+                if (StringUtils.isNotEmpty(outputStr)) {
+                    // 换行
+                    String[] msgArray = outputStr.split("\\n");
+                    if (msgArray.length > 0) {
+                        msgList.addAll(Arrays.asList(msgArray));
+                    }
+                }
+                String errorStr = errorOutPutStream.toString();
+                if (StringUtils.isNotEmpty(errorStr)) {
+                    String[] errorMsgArray = errorStr.split("\\n");
+                    if (errorMsgArray.length > 0) {
+                        msgList.addAll(Arrays.asList(errorMsgArray));
+                    }
+                }
+            }
+            // 上传现在文件
+            SftpFileSystem fs = SftpClientFactory.instance().createSftpFileSystem(session);
+            Files.copy(Paths.get(localFilePath), fs.getDefaultDir().resolve(remoteFilePath)); // 将目标文件拷贝至目标目录
+            msgList.add("执行成功");
+            return new SshExecResultDTO(msgList);
+        } catch (Exception e) {
+            log.error("执行命令失败", e);
+            List<String> msgList = new ArrayList<>();
+            msgList.add("执行命令失败: " + e.getMessage());
+            return new SshExecResultDTO(msgList);
+        } finally {
+            closeData(client, session);
+        }
+    }
+
 
     private static void closeData(SshClient client, ClientSession session) {
         if (Objects.nonNull(session)) {

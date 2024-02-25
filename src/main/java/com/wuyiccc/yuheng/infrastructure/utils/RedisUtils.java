@@ -1,13 +1,11 @@
 package com.wuyiccc.yuheng.infrastructure.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RBatch;
-import org.redisson.api.RBucket;
-import org.redisson.api.RBucketAsync;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author wuyiccc
@@ -19,8 +17,8 @@ public class RedisUtils {
 
     private static RedissonClient CLIENT;
 
-    public RedisUtils(RedissonClient redisTemplate) {
-        RedisUtils.CLIENT = redisTemplate;
+    public RedisUtils(RedissonClient redissonClient) {
+        RedisUtils.CLIENT = redissonClient;
     }
 
 
@@ -80,5 +78,65 @@ public class RedisUtils {
     public static <T> T getCacheObject(final String key) {
         RBucket<T> rBucket = CLIENT.getBucket(key);
         return rBucket.get();
+    }
+
+
+    /**
+     * 带锁时间的redis锁
+     *
+     * @param key  锁key值
+     * @param time 锁时间
+     * @param unit 时间单位
+     * @return 是否锁成功
+     */
+    public static boolean lock(String key, int time, TimeUnit unit) {
+        RLock rLock = CLIENT.getLock(key);
+        if (rLock.isLocked()) {
+            return false;
+        }
+        rLock.lock(time, unit);
+        return true;
+    }
+
+
+    /**
+     * 不带锁时间的redis锁
+     *
+     * @param key 锁的key值
+     * @return 是否锁成功
+     */
+    public static boolean lock(String key) {
+        RLock rLock = CLIENT.getLock(key);
+        if (rLock.isLocked()) {
+            return false;
+        }
+        rLock.lock();
+        return true;
+    }
+
+
+    /**
+     * 手动释放锁
+     *
+     * @param key 锁名称
+     */
+    public static void unlock(String key) {
+        RLock rLock = CLIENT.getLock(key);
+        if (rLock.isLocked()) {
+            rLock.unlock();
+        }
+    }
+
+
+    /**
+     * 尝试获取锁
+     *
+     * @param key     锁key
+     * @param timeout 获取锁的等待时间 ms
+     * @return 是否获取成功
+     */
+    public static boolean tryLock(String key, Long timeout) throws InterruptedException {
+        RLock rLock = CLIENT.getLock(key);
+        return rLock.tryLock(timeout, TimeUnit.MILLISECONDS);
     }
 }
