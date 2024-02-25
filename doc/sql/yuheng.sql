@@ -13,13 +13,13 @@ create table yuheng.t_user
     remark       varchar(500)     default ''                not null comment '备注',
     face_url     varchar(255)     default ''                not null comment '头像',
     gmt_create   datetime         default CURRENT_TIMESTAMP not null comment '创建时间',
-    create_id    varchar(128)     default '-1'                not null comment '创建用户id',
+    create_id    varchar(128)     default '-1'              not null comment '创建用户id',
     gmt_modified datetime         default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
     update_id    varchar(128)     default '-1'              not null comment '更新用户id',
     del_flag     tinyint unsigned default '0'               not null comment '逻辑删除字段 0未删除 1已删除',
     del_id       varchar(128)     default '-1'              not null comment '逻辑删除id',
     version      bigint           default 1                 not null comment '乐观锁版本标识',
-    constraint idx_username
+    constraint uk_username
         unique (username, del_id)
 )
     comment '用户表' collate = utf8mb4_general_ci
