@@ -13,6 +13,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.sshd.common.SshException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -106,6 +107,13 @@ public class GlobalExceptionHandler {
         printErrorLog(request, e);
 
         return R.fail(ABizCode.FILE_SIZE_EXCEEDS_LIMIT);
+    }
+
+    @ExceptionHandler(SshException.class)
+    public R<String> sshExceptionHandler(ServletWebRequest request, SshException e) {
+        printErrorLog(request, e);
+
+        return R.fail(ABizCode.FAIL, e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

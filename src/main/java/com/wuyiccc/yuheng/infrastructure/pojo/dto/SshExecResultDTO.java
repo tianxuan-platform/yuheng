@@ -17,13 +17,6 @@ import java.util.List;
 public class SshExecResultDTO {
 
 
-    /**
-     * 正常输出流信息
-     */
     private List<String> msgList;
 
-    /**
-     * 异常输出流信息
-     */
-    private List<String> errorMsgList;
 }

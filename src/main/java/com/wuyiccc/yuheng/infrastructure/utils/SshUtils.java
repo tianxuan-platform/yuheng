@@ -5,8 +5,6 @@ import com.wuyiccc.yuheng.infrastructure.pojo.dto.SshExecResultDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.ListUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannelEvent;
@@ -31,7 +29,7 @@ public class SshUtils {
     /**
      * 测试服务器连接
      */
-    public static boolean testConnect(SshConnectionConfigDTO sshConnectionConfigDTO) {
+    public static SshExecResultDTO testConnect(SshConnectionConfigDTO sshConnectionConfigDTO) {
 
         SshClient client = null;
         ClientSession session = null;
@@ -42,10 +40,14 @@ public class SshUtils {
             session = client.connect(sshConnectionConfigDTO.getUsername(), sshConnectionConfigDTO.getHost(), sshConnectionConfigDTO.getPort()).verify(3000).getClientSession();
             session.addPasswordIdentity(sshConnectionConfigDTO.getPassword());
             session.auth().verify(3000);
-            return true;
+            List<String> msgList = new ArrayList<>();
+            msgList.add("连接测试成功");
+            return new SshExecResultDTO(msgList);
         } catch (Exception e) {
-            log.error("连接校验失败", e);
-            return false;
+            log.error("连接测试失败", e);
+            List<String> msgList = new ArrayList<>();
+            msgList.add("连接测试失败: " + e.getMessage());
+            return new SshExecResultDTO(msgList);
         } finally {
             closeData(client, session);
         }
@@ -54,7 +56,7 @@ public class SshUtils {
     /**
      * 执行命令
      */
-    public static SshExecResultDTO execCmd(SshConnectionConfigDTO config, String cmd) throws Exception {
+    public static SshExecResultDTO execCmd(SshConnectionConfigDTO config, String cmd) {
 
         SshClient client = null;
         ClientSession session = null;
@@ -79,12 +81,14 @@ public class SshUtils {
                 // 换行
                 String[] msgArray = outputStream.toString().split("\\n");
                 String[] errorMsgArray = errorOutPutStream.toString().split("\\n");
-                List<String> msgList = new ArrayList<>(msgArray.length);
+                List<String> msgList = new ArrayList<>(msgArray.length + errorMsgArray.length);
                 msgList.addAll(Arrays.asList(msgArray));
-                List<String> errorMsg = new ArrayList<>(errorMsgArray.length);
-                errorMsg.addAll(Arrays.asList(errorMsgArray));
-                return new SshExecResultDTO(msgList, errorMsg);
+                msgList.addAll(Arrays.asList(errorMsgArray));
+                return new SshExecResultDTO(msgList);
             }
+        } catch (Exception e) {
+            log.error("执行命令失败", e);
+            return new SshExecResultDTO();
         } finally {
             closeData(client, session);
         }
