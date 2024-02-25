@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @author wuyiccc
  * @date 2024/2/23 22:54
@@ -18,10 +20,10 @@ public class SshExecResultDTO {
     /**
      * 正常输出流信息
      */
-    private String msg;
+    private List<String> msgList;
 
     /**
      * 异常输出流信息
      */
-    private String errorMsg;
+    private List<String> errorMsgList;
 }

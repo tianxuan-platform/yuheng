@@ -5,6 +5,8 @@ import com.wuyiccc.yuheng.infrastructure.pojo.dto.SshExecResultDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannelEvent;
@@ -12,8 +14,7 @@ import org.apache.sshd.client.session.ClientSession;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.EnumSet;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author wuyiccc
@@ -74,7 +75,15 @@ public class SshUtils {
                 channel.setErr(errorOutPutStream);
                 channel.open().verify(3000);
                 channel.waitFor(EnumSet.of(ClientChannelEvent.CLOSED), 0L);
-                return new SshExecResultDTO(outputStream.toString(), errorOutPutStream.toString());
+
+                // 换行
+                String[] msgArray = outputStream.toString().split("\\n");
+                String[] errorMsgArray = errorOutPutStream.toString().split("\\n");
+                List<String> msgList = new ArrayList<>(msgArray.length);
+                msgList.addAll(Arrays.asList(msgArray));
+                List<String> errorMsg = new ArrayList<>(errorMsgArray.length);
+                errorMsg.addAll(Arrays.asList(errorMsgArray));
+                return new SshExecResultDTO(msgList, errorMsg);
             }
         } finally {
             closeData(client, session);
